@@ -38,5 +38,7 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-!/schema.graphql
-!/.graphqlconfig
+
+#graphql
+/schema.graphql
+/.graphqlconfig

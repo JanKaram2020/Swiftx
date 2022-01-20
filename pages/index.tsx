@@ -1,24 +1,38 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from 'styles/Home.module.css';
+import ProductsClasses from 'styles/products.module.css';
 import { useQuery, gql } from '@apollo/client';
-import type { Categories } from 'types';
+import type { Products } from 'types';
+import Product from 'components/Product';
 
 const QUERY = gql`
   query Categories {
-    categories {
+    category {
       name
       products {
         name
+        id
+        inStock
+        gallery
+        prices {
+          currency {
+            label
+            symbol
+          }
+          amount
+        }
       }
     }
   }
 `;
 
 const Home: NextPage = () => {
-  const { data, loading, error } = useQuery<{ categories: Categories }>(QUERY);
+  const { data, loading, error } =
+    useQuery<{ category: { products: Products } }>(QUERY);
   if (loading) return <h1>loadinggg</h1>;
   if (error) return <h1>{error.toString()}</h1>;
+  console.log(data?.category.products.length);
   return (
     <>
       <Head>
@@ -27,12 +41,15 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>Welcome to swiftx</h1>
-        <button type="button">Swifttttt</button>
-
+      <main>
+        <h1 className={styles.title}>Welcome to Swiftx store</h1>
+        <div className={ProductsClasses.products}>
+          {data?.category.products.map((pr) => (
+            <Product product={pr} key={pr.id} />
+          ))}
+        </div>
         <p className={styles.description}>
-          {JSON.stringify(data?.categories, null, 5)}
+          {JSON.stringify(data?.category.products[0], null, 5)}
         </p>
       </main>
     </>
