@@ -1,0 +1,31 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.title {
+  margin: 0;
+  line-height: 1.15;
+  font-size: 4rem;
+  font-family: Raleway, serif;
+  text-transform: uppercase;
+  color: var(--green, green);
+}
+.title:focus,
+.title:hover,
+.title:active {
+  text-decoration: underline;
+}
+.title,
+.description {
+  text-align: center;
+}
+
+.description {
+  margin: 4rem 0;
+  line-height: 1.5;
+  font-size: 1.5rem;
+  font-family: Raleway, serif;
+  max-width: 60ch;
+}

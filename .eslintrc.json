@@ -1,0 +1,15 @@
+{
+  "extends": [ "wesbos/typescript" ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": [".", "node_modules"]
+      }
+    }
+  },
+  "rules": {
+    "react/prop-types": 0,
+    "@typescript-eslint/no-unsafe-assignment": 0,
+    "@typescript-eslint/ban-ts-comment": 0
+  }
+}
