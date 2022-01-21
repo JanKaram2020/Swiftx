@@ -30,6 +30,7 @@ const QUERY = gql`
 const Home: NextPage = () => {
   const { data, loading, error } =
     useQuery<{ category: { products: Products } }>(QUERY);
+  console.log(data);
   if (loading) return <h1>loadinggg</h1>;
   if (error) return <h1>{error.toString()}</h1>;
   console.log(data?.category.products.length);
@@ -48,9 +49,6 @@ const Home: NextPage = () => {
             <Product product={pr} key={pr.id} />
           ))}
         </div>
-        <p className={styles.description}>
-          {JSON.stringify(data?.category.products[0], null, 5)}
-        </p>
       </main>
     </>
   );

@@ -7,11 +7,10 @@ import Link from 'next/link';
 const Product = ({ product }: { product: ProductType }) => {
   const sign = '$';
   const price = product.prices.filter((pr) => pr.currency.symbol === sign)[0];
-  console.log(product);
   if (product.inStock)
     return (
       <div className={styles.product}>
-        <Link href={`/product/${product.name}`}>
+        <Link href={`/product/${product.id}`}>
           <a className={styles.imageContainer}>
             <Image
               className={styles.image}
@@ -55,7 +54,7 @@ const Product = ({ product }: { product: ProductType }) => {
       </div>
     );
   return (
-    <div className={styles.product}>
+    <div className={styles.productUnavailable}>
       <div className={styles.imageContainer}>
         <Image
           className={styles.image}

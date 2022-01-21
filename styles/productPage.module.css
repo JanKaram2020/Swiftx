@@ -1,0 +1,75 @@
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  max-height: 500px;
+}
+.imageColumn {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  overflow-y: hidden;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.buttons {
+  display: flex;
+  gap: 20px;
+}
+.buttons input[type="radio"] {
+  opacity: 0;
+  position: fixed;
+  width: 0;
+}
+.buttons label {
+  display: inline-flex;
+  place-items: center;
+  padding: 10px;
+  border: 1px solid var(--black, black);
+}
+
+.buttons label:hover {
+  background-color: var(--black, black);
+  color: white;
+}
+
+.buttons input[type="radio"]:focus + label {
+  background-color: var(--black, black);
+  color: white;
+}
+
+.buttons input[type="radio"]:checked + label {
+  background-color: var(--black, black);
+  color: white;
+}
+.sizeButton {
+}
+.active {
+}
+.attribute {
+  margin: 30px 0 30px 0;
+}
+.addToCart {
+  background-color: var(--green, green);
+  width: 100%;
+  padding: 10px 20px 10px 20px;
+  color: white;
+  text-transform: uppercase;
+}
+.addToCart:hover {
+  background-color: darkgreen;
+}
+.addToCart:disabled {
+  background-color: gray;
+  pointer-events: none;
+}
+.description {
+  margin-top: 50px;
+  word-break: break-word;
+}
+.content {
+  width: 300px;
+}

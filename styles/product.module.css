@@ -4,6 +4,12 @@
   padding: 15px;
   position: relative;
 }
+.productUnavailable {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  position: relative;
+}
 .product:hover {
   box-shadow: 0 4px 35px rgba(168, 172, 176, 0.19);
 }
