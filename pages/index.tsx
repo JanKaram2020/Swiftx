@@ -1,12 +1,12 @@
-import type { NextPage } from 'next';
+import { gql } from '@apollo/client';
 import Head from 'next/head';
+import ApolloClient from 'client';
+import Product from 'components/Product';
 import styles from 'styles/Home.module.css';
 import ProductsClasses from 'styles/products.module.css';
-import { useQuery, gql } from '@apollo/client';
 import type { Products } from 'types';
-import Product from 'components/Product';
 
-const QUERY = gql`
+const AllProductsQuery = gql`
   query Categories {
     category {
       name
@@ -15,6 +15,15 @@ const QUERY = gql`
         id
         inStock
         gallery
+        attributes {
+          id
+          name
+          items {
+            displayValue
+            value
+            id
+          }
+        }
         prices {
           currency {
             label
@@ -26,14 +35,15 @@ const QUERY = gql`
     }
   }
 `;
-
-const Home: NextPage = () => {
-  const { data, loading, error } =
-    useQuery<{ category: { products: Products } }>(QUERY);
-  console.log(data);
+interface HomePageProps {
+  loading: boolean;
+  data: { category: { products: Products } };
+}
+const Home: ({ loading, data }: HomePageProps) => JSX.Element = ({
+  loading,
+  data,
+}: HomePageProps) => {
   if (loading) return <h1>loadinggg</h1>;
-  if (error) return <h1>{error.toString()}</h1>;
-  console.log(data?.category.products.length);
   return (
     <>
       <Head>
@@ -53,5 +63,8 @@ const Home: NextPage = () => {
     </>
   );
 };
-
+export async function getStaticProps() {
+  const query = await ApolloClient.query({ query: AllProductsQuery });
+  return { props: query };
+}
 export default Home;

@@ -1,12 +1,20 @@
-import React from 'react';
 import Image from 'next/image';
-import { Product as ProductType } from 'types';
-import styles from 'styles/product.module.css';
 import Link from 'next/link';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store';
+import { addToCart, openCart } from 'store/cart';
+import styles from 'styles/product.module.css';
+import { Product as ProductType } from 'types';
 
 const Product = ({ product }: { product: ProductType }) => {
-  const sign = '$';
-  const price = product.prices.filter((pr) => pr.currency.symbol === sign)[0];
+  const attributes = product?.attributes?.map((atr) => atr);
+  const defaultOptions = attributes?.map((it) => it.items[0].value);
+  const currency = useSelector((state: RootState) => state.currency.value);
+  const price = product.prices.filter(
+    (pr) => pr.currency.symbol === currency
+  )[0];
+  const dispatch = useDispatch();
   if (product.inStock)
     return (
       <div className={styles.product}>
@@ -25,7 +33,14 @@ const Product = ({ product }: { product: ProductType }) => {
             <a>{product.name}</a>
           </Link>
         </p>
-        <button type="button" className={styles.shop}>
+        <button
+          type="button"
+          className={styles.shop}
+          onClick={() => {
+            dispatch(addToCart({ id: product.id, options: defaultOptions }));
+            dispatch(openCart());
+          }}
+        >
           <svg
             width="20"
             height="20"
@@ -49,7 +64,7 @@ const Product = ({ product }: { product: ProductType }) => {
         </button>
         <p className={styles.price}>
           {price.amount}
-          {sign}
+          {currency}
         </p>
       </div>
     );
@@ -93,7 +108,7 @@ const Product = ({ product }: { product: ProductType }) => {
       </button>
       <p className={styles.price}>
         {price.amount}
-        {sign}
+        {currency}
       </p>
     </div>
   );

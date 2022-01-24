@@ -1,11 +1,23 @@
-import { useRouter } from 'next/router';
-import { NextPage } from 'next';
-import { gql, useQuery } from '@apollo/client';
-import { Product } from 'types';
-import { useState } from 'react';
-import styles from 'styles/productPage.module.css';
+import { gql } from '@apollo/client';
+import { GetStaticProps } from 'next';
 import Image from 'next/image';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import ApolloClient from 'client';
+import { RootState } from 'store';
+import { addToCart, openCart } from 'store/cart';
+import styles from 'styles/productPage.module.css';
+import { Product } from 'types';
 
+const AllProductsIdsQuery = gql`
+  query ProductsId {
+    category {
+      products {
+        id
+      }
+    }
+  }
+`;
 const QUERY = gql`
   query Product($pid: String!) {
     product(id: $pid) {
@@ -33,23 +45,20 @@ const QUERY = gql`
     }
   }
 `;
-
-const Post: NextPage = () => {
-  const router = useRouter();
-  const { pid } = router.query;
-  const { data, loading, error } = useQuery<{ product: Product }>(QUERY, {
-    variables: { pid },
-  });
+interface ProductPageProps {
+  data: { product: Product };
+  loading: boolean;
+}
+const ProductPage = ({ loading, data }: ProductPageProps): JSX.Element => {
+  const dispatch = useDispatch();
   const [imageNumber, setImageNumber] = useState(0);
-  const sign = '$';
+  const currency = useSelector((state: RootState) => state.currency.value);
   const price = data?.product.prices.filter(
-    (pr) => pr.currency.symbol === sign
+    (pr) => pr.currency.symbol === currency
   )[0];
   const gallery = data?.product.gallery;
-  console.log(data);
-  const mod = JSON.parse(JSON.stringify({ ...data }));
+  const attributes = data.product.attributes.map((atr) => atr.id);
   if (loading) return <h3>loading.........</h3>;
-  if (error) return <h3>error...........</h3>;
 
   return (
     <div className={styles.container}>
@@ -74,18 +83,12 @@ const Post: NextPage = () => {
         className={styles.content}
         onSubmit={(e) => {
           e.preventDefault();
-          const formData = new FormData(e.currentTarget);
-          console.log('id', pid);
-          let i = 0;
-          // @ts-ignore
-          for (const p of formData) {
-            const name = p[0];
-            const value = p[1];
-            mod.product.attributes[i].currentValue = value;
-            i += 1;
-            console.log(name, value);
-          }
-          console.log(mod);
+          const options: any[] = [];
+          attributes.forEach((at) => {
+            options.push(e.currentTarget[at].value);
+          });
+          dispatch(addToCart({ id: data.product.id, options }));
+          dispatch(openCart());
         }}
       >
         <h2>{data?.product.name}</h2>
@@ -99,7 +102,7 @@ const Post: NextPage = () => {
                     type="radio"
                     name={atr.name}
                     id={`${item.id} ${atr.name}`}
-                    value={item.id}
+                    value={item.value}
                     required
                   />
                   <label
@@ -116,7 +119,7 @@ const Post: NextPage = () => {
         <div className={styles.column}>
           <h3>Price</h3>
           <p>
-            {price?.amount} {sign}
+            {price?.amount} {currency}
           </p>
           <button type="submit" className={styles.addToCart}>
             Add to cart
@@ -132,5 +135,24 @@ const Post: NextPage = () => {
     </div>
   );
 };
+export async function getStaticPaths() {
+  const { data } = await ApolloClient.query({
+    query: AllProductsIdsQuery,
+  });
+  const paths = data.category.products.map((pr: Product) => ({
+    params: { pid: pr.id },
+  }));
+  return {
+    paths,
+    fallback: false,
+  };
+}
+export const getStaticProps: GetStaticProps = async (context) => {
+  const query = await ApolloClient.query({
+    query: QUERY,
+    variables: { pid: context?.params?.pid },
+  });
+  return { props: query };
+};
 
-export default Post;
+export default ProductPage;

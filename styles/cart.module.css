@@ -1,0 +1,55 @@
+.shop {
+    position: relative;
+}
+.shop span {
+    background-color: var(--black, black);
+    color: white;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -7px;
+    left: 12px;
+}
+.relative{
+    position: relative;
+}
+.cartContainer{
+    position: absolute;
+    z-index: 2;
+    background-color: white;
+    top: 60px;
+    right: -10px;
+    min-width: 200px;
+    width: 325px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    gap: 10px;
+}
+.cartContainer h3{
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(1,1,1,1);
+}
+.totalSection{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.totalSection button{
+    width: 140px;
+    height: 43px;
+    text-transform: uppercase;
+    font-family: Raleway;
+}
+.viewButton{
+    border:1px solid black
+}
+.checkButton{
+    background-color: var(--green);
+    color:white;
+}

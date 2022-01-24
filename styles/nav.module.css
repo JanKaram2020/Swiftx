@@ -4,11 +4,13 @@
   align-items: center;
   justify-content: center;
   grid-gap: 2rem;
-  margin: 10px 0 80px 0;
+  padding: 0 100px 0 100px;
+  margin: 0 0 80px 0;
   min-height: 80px;
   position: relative;
   z-index: 2;
   height: 100px;
+  background-color:white;
 }
 .nav ul {
   display: flex;
@@ -36,23 +38,4 @@
 .cursor {
   cursor: pointer;
 }
-.currency {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
-.shop {
-  position: relative;
-}
-.shop span {
-  background-color: var(--black, black);
-  color: white;
-  border-radius: 50%;
-  width: 15px;
-  height: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: -7px;
-  left: 12px;
-}
+
