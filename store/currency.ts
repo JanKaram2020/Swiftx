@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Currency } from 'types/currency';
 
-type Currency = '$' | '£' | 'A$' | '¥' | '₽';
 export interface CurrencyState {
   value: Currency;
 }

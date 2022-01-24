@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CartItem from 'components/CartItem';
 import useTotal from 'helpers/useTotal';
-import { RootState } from 'store';
+import { AppDispatch, RootState } from 'store';
 import { toggleCart } from 'store/cart';
 import styles from 'styles/cart.module.css';
 
@@ -11,7 +11,7 @@ const Cart = () => {
   const total = useTotal();
   const cartItems = useSelector((state: RootState) => state.cart.cartItems);
   const isOpen = useSelector((state: RootState) => state.cart.open);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   return (
     <div className={styles.relative}>
       <button
@@ -50,7 +50,7 @@ const Cart = () => {
               item={item}
             />
           ))}
-          <div className={styles.totalSection} style={{}}>
+          <div className={styles.totalSection}>
             <p>Total</p>
             <p>{total}</p>
             <Link href="/cart">

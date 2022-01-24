@@ -10,14 +10,7 @@ const Cart = () => {
   const cartItems = useSelector((state: RootState) => state.cart.cartItems);
   return (
     <div className={styles.relative}>
-      <div
-        style={{
-          width: '100%',
-          display: 'grid',
-          gap: '30px',
-          fontSize: '22px',
-        }}
-      >
+      <div className={styles.cartPage}>
         <h3>My Bag, {cartItems.length} items</h3>
         {cartItems.map((item) => (
           <CartItem

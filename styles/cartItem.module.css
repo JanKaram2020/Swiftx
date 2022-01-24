@@ -51,3 +51,11 @@
     font-size: 14px;
     height: 10px;
 }
+.choose{
+    background-color: white;
+    color: black;
+}
+.normal{
+    background-color: lightgray;
+    color: var(--gray,gray);
+}

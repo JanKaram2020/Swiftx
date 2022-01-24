@@ -1,47 +1,15 @@
-import { gql } from '@apollo/client';
 import { GetStaticProps } from 'next';
 import ApolloClient from 'client';
 import Product from 'components/Product';
 import styles from 'styles/Home.module.css';
 import ProductsClasses from 'styles/products.module.css';
 import { Category, Products } from 'types';
+import {
+  ALL_CATEGORIES_QUERY,
+  ALL_CATEGORY_NAMES_QUERY,
+} from 'queries/ALL_CATEGORIES_QUERY';
+import SEO from 'components/SEO';
 
-const QUERY = gql`
-  query Categories {
-    categories {
-      name
-      products {
-        name
-        id
-        inStock
-        gallery
-        attributes {
-          id
-          name
-          items {
-            displayValue
-            value
-            id
-          }
-        }
-        prices {
-          currency {
-            label
-            symbol
-          }
-          amount
-        }
-      }
-    }
-  }
-`;
-const CategoryNamesQuery = gql`
-  query Categories {
-    categories {
-      name
-    }
-  }
-`;
 interface CategoryPageInterface {
   products: Products;
   loading: boolean;
@@ -55,6 +23,7 @@ const CategoryPage = ({
   if (loading) return <h3>loading.........</h3>;
   return (
     <>
+      <SEO title={`${cid} | Swiftx`} />
       <h1 className={styles.title}>{cid}</h1>
       <div className={ProductsClasses.products}>
         {products?.map((pr) => (
@@ -66,7 +35,7 @@ const CategoryPage = ({
 };
 export async function getStaticPaths() {
   const { data } = await ApolloClient.query({
-    query: CategoryNamesQuery,
+    query: ALL_CATEGORY_NAMES_QUERY,
   });
   const paths = data.categories.map((ca: Category) => ({
     params: { cid: ca.name },
@@ -78,7 +47,7 @@ export async function getStaticPaths() {
 }
 export const getStaticProps: GetStaticProps = async (context) => {
   const query = await ApolloClient.query({
-    query: QUERY,
+    query: ALL_CATEGORIES_QUERY,
     variables: { cid: context?.params?.cid },
   });
   const productsInCategory = query.data?.categories.filter(

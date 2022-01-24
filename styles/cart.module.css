@@ -53,3 +53,9 @@
     background-color: var(--green);
     color:white;
 }
+.cartPage{
+    width: 100%;
+    display: grid;
+    gap: 30px;
+    font-size: 22px;
+}

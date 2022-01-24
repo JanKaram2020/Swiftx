@@ -1,51 +1,23 @@
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import Image from 'next/image';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store';
-import {
-  CartItem as CartItemInterface,
-  changeOption,
-  decrementQuantity,
-  incrementQuantity,
-} from 'store/cart';
+import { AppDispatch, RootState } from 'store';
+import { changeOption, decrementQuantity, incrementQuantity } from 'store/cart';
+import { CartItem as CartItemInterface } from 'types/cartStore';
 import styles from 'styles/cartItem.module.css';
 import { Product } from 'types';
-
-const QUERY = gql`
-  query product($pid: String!) {
-    product(id: $pid) {
-      name
-      id
-      inStock
-      gallery
-      description
-      attributes {
-        id
-        name
-        items {
-          displayValue
-          value
-          id
-        }
-      }
-      prices {
-        currency {
-          label
-          symbol
-        }
-        amount
-      }
-    }
-  }
-`;
+import SINGLE_PRODUCT_QUERY from 'queries/SINGLE_PRODUCT_QUERY';
 
 const CartItem = ({ item }: { item: CartItemInterface }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const currency = useSelector((state: RootState) => state.currency.value);
-  const { data, loading } = useQuery<{ product: Product }>(QUERY, {
-    variables: { pid: item.id },
-  });
+  const { data, loading } = useQuery<{ product: Product }>(
+    SINGLE_PRODUCT_QUERY,
+    {
+      variables: { pid: item.id },
+    }
+  );
   const price = data?.product.prices.filter(
     (pr) => pr.currency.symbol === currency
   )[0];
@@ -76,14 +48,9 @@ const CartItem = ({ item }: { item: CartItemInterface }) => {
               {at.items.map((it) => (
                 <button
                   type="button"
-                  style={{
-                    backgroundColor: `${
-                      it.value === item.options[i] ? 'white' : 'lightgray'
-                    } `,
-                    color: `${
-                      it.value === item.options[i] ? 'black' : 'gray'
-                    } `,
-                  }}
+                  className={
+                    it.value === item.options[i] ? styles.choose : styles.normal
+                  }
                   key={it.id}
                   onClick={() =>
                     changeOptionHandler({ index: i, value: it.value })

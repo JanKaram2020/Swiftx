@@ -1,20 +1,19 @@
 import React, { MouseEvent, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'store';
+import { AppDispatch, RootState } from 'store';
 import { change } from 'store/currency';
 import styles from 'styles/currency.module.css';
 
 const CurrencyChanger = () => {
   const [isOpen, setOpen] = useState(false);
   const currency = useSelector((state: RootState) => state.currency.value);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const clickHandler = (e: MouseEvent<HTMLButtonElement>) => {
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     dispatch(change(e.target.value));
     setOpen(false);
   };
-  // @ts-ignore
   return (
     <div className={styles.currency}>
       <button
