@@ -1,5 +1,11 @@
 .layout {
-  padding: 0 100px 0 100px;
+  padding: 0 20px 0 20px;
+}
+
+@media only screen and (min-width: 768px) {
+  .layout {
+    padding: 0 100px 0 100px;
+  }
 }
 .overlay{
   position:fixed;
