@@ -1,6 +1,17 @@
 .products {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 50px;
   width: 100%;
+}
+@media only screen and (min-width: 600px) {
+  .products{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .products{
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }

@@ -41,16 +41,13 @@ const Nav = () => (
         <NavLink href="/category/tech">tech</NavLink>
       </li>
     </ul>
-    <Link href="/">
-      <a>
-        <Image
-          src="/logo.png"
-          width="40px"
-          height="40px"
-          className={styles.cursor}
-        />
-      </a>
-    </Link>
+    <div className={styles.image}>
+      <Link href="/">
+        <a>
+          <Image src="/logo.png" width="40px" height="40px" />
+        </a>
+      </Link>
+    </div>
     <ul className={styles.end}>
       <li>
         <CurrencyChanger />
