@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   gap: 20px;
-  max-height: 500px;
   flex-wrap: wrap;
 }
 .imageColumn {
@@ -30,6 +29,7 @@
 }
 .buttons {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
 }
 .buttons input[type="radio"] {
