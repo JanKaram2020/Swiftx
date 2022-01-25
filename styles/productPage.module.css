@@ -10,11 +10,12 @@
   flex-direction: row;
   max-height: 100%;
   overflow-x: scroll;
+  max-width: 100%;
 }
 .imageColumn button{
   min-width: 100px;
 }
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 780px) {
   .imageColumn {
     display: flex;
     flex-direction: column;
