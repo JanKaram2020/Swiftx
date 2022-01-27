@@ -13,6 +13,8 @@
 }
 .imageColumn button{
   min-width: 100px;
+  min-height: 100px;
+  background-size: cover;
 }
 @media only screen and (min-width: 780px) {
   .imageColumn {

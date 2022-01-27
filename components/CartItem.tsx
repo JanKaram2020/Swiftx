@@ -91,6 +91,7 @@ const CartItem = ({ item }: { item: CartItemInterface }) => {
         </div>
         {data?.product?.gallery[0] ? (
           <Image
+            alt={data.product.name}
             src={data.product.gallery[0]}
             width="105"
             height="137"

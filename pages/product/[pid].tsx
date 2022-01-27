@@ -26,6 +26,7 @@ const ProductPage = ({ loading, data }: ProductPageProps): JSX.Element => {
   const attributes = data.product.attributes.map((atr) => atr.id);
   if (loading) return <h3>loading.........</h3>;
 
+  // @ts-ignore
   return (
     <>
       <SEO
@@ -37,14 +38,20 @@ const ProductPage = ({ loading, data }: ProductPageProps): JSX.Element => {
       <div className={styles.container}>
         <div className={styles.imageColumn}>
           {gallery?.map((pic, i) => (
-            <button key={pic} type="button" onClick={() => setImageNumber(i)}>
-              <Image src={pic} width="80px" height="80px" objectFit="cover" />
-            </button>
+            <button
+              aria-label={`image number ${i}`}
+              style={{ backgroundImage: `url(${pic})` }}
+              key={pic}
+              type="button"
+              onClick={() => setImageNumber(i)}
+              data-image={pic}
+            />
           ))}
         </div>
         {gallery ? (
           <div className={styles.image}>
             <Image
+              alt={data.product.name}
               src={gallery[imageNumber]}
               width="500px"
               height="500px"

@@ -21,6 +21,7 @@ const Product = ({ product }: { product: ProductType }) => {
         <Link href={`/product/${product.id}`}>
           <a className={styles.imageContainer}>
             <Image
+              alt={product.name}
               className={styles.image}
               src={product.gallery[0]}
               width="400px"
@@ -72,6 +73,7 @@ const Product = ({ product }: { product: ProductType }) => {
     <div className={styles.productUnavailable}>
       <div className={styles.imageContainer}>
         <Image
+          alt={product.name}
           className={styles.image}
           src={product.gallery[0]}
           width="400px"
